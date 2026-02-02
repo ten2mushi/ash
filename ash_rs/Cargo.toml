@@ -1,0 +1,57 @@
+[package]
+name = "ash_rs"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Real-time SDF query runtime optimized for speed and memory efficiency"
+readme = "README.md"
+keywords = ["sdf", "robotics", "real-time", "spatial", "query"]
+categories = ["algorithms", "data-structures", "science::robotics"]
+
+[features]
+default = ["std"]
+std = ["ash_core/std", "ash_io/std"]
+alloc = ["ash_core/alloc", "ash_io/alloc"]
+serde = ["dep:serde", "dep:bytemuck"]
+mesh = ["dep:rayon", "std"]
+simd = ["ash_core/simd", "ash_io/simd"]
+
+[dependencies]
+ash_core = { path = "../ash_core" }
+ash_io = { path = "../ash_io" }
+libm = "0.2"
+
+[dependencies.serde]
+version = "1.0"
+optional = true
+features = ["derive"]
+
+[dependencies.bytemuck]
+version = "1.14"
+optional = true
+features = ["derive"]
+
+[dependencies.rayon]
+version = "1.8"
+optional = true
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+proptest = "1.4"
+rand = "0.8"
+
+[[bench]]
+name = "query_bench"
+harness = false
+
+[[test]]
+name = "correctness"
+path = "tests/correctness.rs"
+
+[[test]]
+name = "serialization"
+path = "tests/serialization.rs"
+
+[[test]]
+name = "integration"
+path = "tests/integration.rs"

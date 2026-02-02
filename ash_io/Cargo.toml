@@ -1,0 +1,25 @@
+[package]
+name = "ash_io"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "I/O, storage, and shared memory for sparse-dense SDF grids with generic feature dimensions"
+readme = "README.md"
+keywords = ["sdf", "robotics", "storage", "serialization", "shared-memory"]
+categories = ["data-structures", "encoding", "filesystem"]
+
+[features]
+default = ["std"]
+std = ["ash_core/std"]
+alloc = ["ash_core/alloc"]
+simd = ["ash_core/simd", "wide"]
+rayon = ["dep:rayon"]
+
+[dependencies]
+ash_core = { path = "../ash_core" }
+libm = "0.2"
+wide = { version = "0.7", optional = true }
+rayon = { version = "1.8", optional = true }
+
+[dev-dependencies]
+proptest = "1.4"

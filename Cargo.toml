@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+    "ash_core",
+    "ash_io",
+    "ash_rs",
+    "neural_ash",
+    "examples",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+# Workspace-level feature unification
+# Use: cargo build --features simd
+[workspace.metadata.features]
+simd = ["ash_core/simd", "ash_io/simd", "ash_rs/simd", "ash_examples/simd"]
+mesh = ["ash_rs/mesh"]
+rayon = ["ash_io/rayon"]
+
+# Profile optimizations
+[profile.release]
+lto = "thin"
+codegen-units = 1
+opt-level = 3
+
+[profile.bench]
+lto = "thin"
+codegen-units = 1
+opt-level = 3

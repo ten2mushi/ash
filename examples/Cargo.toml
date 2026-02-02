@@ -1,0 +1,35 @@
+[package]
+name = "ash_examples"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Showcase examples and benchmarks for the ASH ecosystem"
+
+[features]
+default = []
+simd = ["ash_core/simd", "ash_io/simd"]
+
+[dependencies]
+ash_core = { path = "../ash_core" }
+ash_io = { path = "../ash_io" }
+ash_rs = { path = "../ash_rs", features = ["mesh"] }
+
+# For timing and math
+instant = "0.1"
+libm = "0.2"
+
+[[bin]]
+name = "obj_roundtrip"
+path = "src/obj_roundtrip.rs"
+
+[[bin]]
+name = "mesh_extraction"
+path = "src/mesh_extraction.rs"
+
+[[bin]]
+name = "benchmark_suite"
+path = "src/benchmark_suite.rs"
+
+[[bin]]
+name = "benchmark_optimizations"
+path = "src/benchmark_optimizations.rs"

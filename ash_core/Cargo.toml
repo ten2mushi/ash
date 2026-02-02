@@ -1,0 +1,22 @@
+[package]
+name = "ash_core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Pure mathematical algorithms for sparse-dense SDF grids"
+readme = "README.md"
+keywords = ["sdf", "robotics", "marching-cubes", "interpolation", "no_std"]
+categories = ["no-std", "algorithms", "mathematics"]
+
+[features]
+default = ["std"]
+std = []
+alloc = []
+simd = ["wide"]
+
+[dependencies]
+libm = "0.2"
+wide = { version = "0.7", optional = true }
+
+[dev-dependencies]
+# Testing only - no runtime dependencies

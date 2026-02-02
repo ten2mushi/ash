@@ -1,0 +1,40 @@
+[package]
+name = "neural_ash"
+version.workspace = true
+edition.workspace = true
+description = "Differentiable SDF learning with Burn for the ASH ecosystem"
+license.workspace = true
+
+[dependencies]
+ash_core = { path = "../ash_core" }
+ash_io = { path = "../ash_io", features = ["std"] }
+
+# Burn framework - use ndarray by default for broad compatibility
+burn = { version = "0.16", default-features = false, features = ["ndarray", "autodiff", "std"] }
+
+# Async for online mode
+tokio = { version = "1", features = ["rt-multi-thread", "sync", "time"], optional = true }
+
+# Parallelism
+rayon = "1.8"
+
+# Error handling
+thiserror = "1.0"
+
+# Logging
+log = "0.4"
+
+# Logging initialization for examples
+env_logger = { version = "0.11", optional = true }
+
+[dev-dependencies]
+burn = { version = "0.16", features = ["ndarray", "autodiff"] }
+env_logger = "0.11"
+tempfile = "3"
+
+[features]
+default = ["std"]
+std = ["ash_core/std", "ash_io/std"]
+online = ["tokio"]
+wgpu = ["burn/wgpu"]
+examples = ["env_logger"]
