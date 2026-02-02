@@ -16,7 +16,7 @@ ash_rs owns the real-time queries on the environement:
 it either uses .ash files or in memory world representation
 
 neural_ash owns the manipulation of features for each point in the worl (bare minimum is a sdf, but ash world format supports any number of features to create semantic map fo the world).
-the intent is to have a system where neural nets can each process specific inputs and update specific subsets of features associated with points in the world. Those updates are either done on a .ash file, or directly in memory (ash_rs queries file/memory for the latest owrld representation)
+the intent is to have a system where neural nets can each process specific inputs and update specific subsets of features associated with points in the world. Those updates are either done on a .ash file, or directly in memory (ash_rs queries file/memory for the latest owrld representation that ash_rs can query!)
 
 ## file formats
 
