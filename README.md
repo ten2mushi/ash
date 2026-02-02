@@ -1,6 +1,6 @@
 # Adaptive Sparse Hierarchical SDF Grid System
 
-library for representing, querying, and manipulating Signed Distance Fields (SDFs) (and any other features) using a sparse-dense hierarchical grid structure.
+library for representing, querying, and manipulating signed distance fields (and any other features) using a sparse-dense hierarchical grid structure.
 
 
 consists of 4 core crates for the moment:
