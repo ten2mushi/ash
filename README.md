@@ -26,7 +26,7 @@ can either train offline, compute and feed the produced .ash file to ash_rs runn
 
 or
 
-can dedicate compute on the embbed platform for online training, updating the world in different threads/chips which each update the in memory representation in order for the main control loop (mcu) to use the dynamic world world representation
+can dedicate compute on the embbed platform for online training, updating the world in different threads/chips which each update the in memory representation in order for the main control loop (mcu) to use the continuously updated world representation
 
 ---
 
