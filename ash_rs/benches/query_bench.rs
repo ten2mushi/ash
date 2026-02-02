@@ -195,8 +195,8 @@ fn bench_shared_memory(c: &mut Criterion) {
     let grid_dim = 8u32;
     let capacity = 200usize;
     let cells_per_block = (grid_dim as usize).pow(3);
-    let size = compute_shared_size(grid_dim, capacity);
-    let layout = SharedLayout::compute(grid_dim, capacity);
+    let size = compute_shared_size::<1>(grid_dim, capacity);
+    let layout = SharedLayout::compute::<1>(grid_dim, capacity);
 
     // Allocate aligned memory (simulates mmap'd shared region)
     let mut buffer = vec![0u8; size + 64];
@@ -215,6 +215,7 @@ fn bench_shared_memory(c: &mut Criterion) {
         header.capacity = capacity as u32;
         header.num_blocks = AtomicU32::new(125);
         header.global_version = AtomicU64::new(0);
+        header.feature_dim = 1;
     }
 
     // Initialize block map (simplified: just add blocks 0-124)
@@ -239,7 +240,7 @@ fn bench_shared_memory(c: &mut Criterion) {
     let center = Point3::new(2.0, 2.0, 2.0);
     let radius = 1.5;
     unsafe {
-        let values_ptr = aligned_ptr.add(layout.values_offset) as *mut f32;
+        let values_ptr = aligned_ptr.add(layout.feature_offsets[0]) as *mut f32;
         for block_idx in 0..125 {
             let bx = block_idx % 5;
             let by = (block_idx / 5) % 5;
@@ -271,7 +272,7 @@ fn bench_shared_memory(c: &mut Criterion) {
     }
 
     // Create view
-    let view = unsafe { SharedGridView::from_ptr(aligned_ptr as *const u8).unwrap() };
+    let view = unsafe { SharedGridView::<1>::from_ptr(aligned_ptr as *const u8).unwrap() };
 
     // Benchmark shared memory queries
     c.bench_function("shared_single_query", |b| {
@@ -281,7 +282,7 @@ fn bench_shared_memory(c: &mut Criterion) {
 
     c.bench_function("shared_collision_check", |b| {
         let point = Point3::new(2.0, 2.0, 2.0);
-        b.iter(|| black_box(view.in_collision(black_box(point), 0.1)))
+        b.iter(|| black_box(view.query(black_box(point)).map(|v| v[0] < 0.1).unwrap_or(false)))
     });
 
     // Benchmark to show warm cache benefit (query same region repeatedly)
@@ -298,7 +299,7 @@ fn bench_shared_memory(c: &mut Criterion) {
             let mut sum = 0.0f32;
             for p in &points {
                 if let Some(v) = view.query(*p) {
-                    sum += v;
+                    sum += v[0];
                 }
             }
             black_box(sum)
