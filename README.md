@@ -19,6 +19,7 @@ neural_ash owns the manipulation of features for each point in the worl (bare mi
 the intent is to have a system where neural nets can each process specific inputs and update specific subsets of features associated with points in the world. Those updates are either done on a .ash file, or directly in memory (ash_rs queries file/memory for the latest owrld representation that ash_rs can query!)
 
 ---
+
 TL;DR:
 
 can either train offline, compute and feed the produced .ash file to ash_rs running on a ressource constrained embed platform for querying the world
@@ -26,6 +27,7 @@ can either train offline, compute and feed the produced .ash file to ash_rs runn
 or
 
 can dedicate compute on the embbed platform for online training, updating the world in different threads/chips which each update the in memory representation in order for the main control loop (mcu) to use the dynamic world world representation
+
 ---
 
 run ```bash cargo bench```for performance of ash_rs:
