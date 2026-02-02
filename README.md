@@ -23,6 +23,16 @@ can either train on offline compute and feed the produced .ash file to ash_rs ru
 or
 can dedicate compute on the embbed platform for online training, updating the world in different threads/chips which each update the in memory representation in order for the main control loop (mcu) to use the dynamic world world representation
 
+
+run ```bash cargo bench```for performance of ash_rs:
+
+silicon m3:
+Throughput batch queries:
+batch size 1000 -> 7.0 M/sec (~142 ns latency per point)
+batch size 10000 -> ~4.7 M/sec (~210 ns latency per point)
+single point query (and collision detection) -> ~70 ns per point
+
+
 ## file formats
 
 ### .ash Binary Format
